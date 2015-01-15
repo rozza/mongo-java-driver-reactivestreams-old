@@ -1,0 +1,144 @@
+/*
+ * Copyright 2015 MongoDB, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.mongodb.reactivestreams.client
+
+import com.mongodb.MongoException
+import com.mongodb.async.AsyncBatchCursor
+import com.mongodb.async.client.MongoIterable
+import org.bson.Document
+import spock.lang.Specification
+
+import java.util.concurrent.TimeUnit
+
+class MongoIterablePublisherSpecification extends Specification {
+
+    def 'should be cold and not execute the batchCursor until request is called'() {
+        given:
+        def subscriber = new Fixture.ObservableSubscriber()
+        def mongoIterable = Mock(MongoIterable)
+
+        when:
+        def publisher = new MongoIterablePublisher(mongoIterable)
+
+        then:
+        0 * mongoIterable.batchCursor(_)
+
+        when:
+        publisher.subscribe(subscriber)
+
+        then:
+        0 * mongoIterable.batchCursor(_)
+
+        when:
+        subscriber.getSubscription().request(1)
+
+        then:
+        1 * mongoIterable.batchCursor(_)
+    }
+
+    def 'should handle exceptions when getting the batchCursor'() {
+        given:
+        def subscriber = new Fixture.ObservableSubscriber()
+        def mongoIterable = Stub(MongoIterable) {
+            batchCursor(_) >> { args -> args[0].onResult(null, new MongoException('failure')) }
+        }
+
+        when:
+        new MongoIterablePublisher(mongoIterable).subscribe(subscriber)
+        subscriber.getSubscription().request(1)
+
+        then:
+        subscriber.isCompleted()
+
+        when:
+        subscriber.get(1, TimeUnit.SECONDS)
+
+        then:
+        thrown(MongoException)
+    }
+
+    def 'should handle null returns when getting the batchCursor'() {
+        given:
+        def subscriber = new Fixture.ObservableSubscriber()
+        def mongoIterable = Stub(MongoIterable) {
+            batchCursor(_) >> { args -> args[0].onResult(null, null) }
+        }
+
+        when:
+        new MongoIterablePublisher(mongoIterable).subscribe(subscriber)
+        subscriber.getSubscription().request(1)
+
+        then:
+        subscriber.isCompleted()
+
+        when:
+        def result = subscriber.get(1, TimeUnit.SECONDS)
+
+        then:
+        result == []
+    }
+
+    def 'should call next on the batchCursor'() {
+        given:
+        def cannedResults = [new Document('_id', 1), new Document('_id', 1), new Document('_id', 1)]
+        def cursor = {
+            Stub(AsyncBatchCursor) {
+                def count = 0
+                def results;
+                def getResult = {
+                    if (count < 3) {
+                        results = [cannedResults[0]]
+                    } else {
+                        results = null
+                    }
+                    count++
+                    results
+                }
+                next(_) >> {
+                    it[0].onResult(getResult(), null)
+                }
+                isClosed() >> { count >= 3 }
+            }
+        }
+        def subscriber = new Fixture.ObservableSubscriber()
+        def mongoIterable = Stub(MongoIterable) {
+            batchCursor(_) >> { args -> args[0].onResult(cursor(), null) }
+        }
+
+        when:
+        new MongoIterablePublisher(mongoIterable).subscribe(subscriber)
+        subscriber.getSubscription().request(1)
+
+        then:
+        !subscriber.isCompleted()
+        subscriber.getReceived() == [cannedResults[0]]
+
+        when:
+        subscriber.getSubscription().request(1)
+
+        then:
+        !subscriber.isCompleted()
+        subscriber.getReceived() == [cannedResults[0], cannedResults[1]]
+
+        when:
+        subscriber.getSubscription().request(1)
+
+        then:
+        subscriber.isCompleted()
+        subscriber.getReceived() == cannedResults
+    }
+}
