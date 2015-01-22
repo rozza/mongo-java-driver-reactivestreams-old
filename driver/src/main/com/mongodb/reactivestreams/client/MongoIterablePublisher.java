@@ -89,12 +89,12 @@ class MongoIterablePublisher<T> implements Publisher<T> {
                     }
                 }
             });
-        };
+        }
 
         void getNextBatch() {
             log("getNextBatch");
-            AsyncBatchCursor<T> cursor = batchCursor.get();
-            if (cursor != null && getMore.compareAndSet(false, true)) {
+            if (getMore.compareAndSet(false, true)) {
+                AsyncBatchCursor<T> cursor = batchCursor.get();
                 if (cursor.isClosed()) {
                     getMore.set(false);
                     tryDrain();

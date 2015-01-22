@@ -18,6 +18,7 @@ package com.mongodb.reactivestreams.client
 
 import com.mongodb.CursorType
 import com.mongodb.MongoNamespace
+import com.mongodb.async.AsyncBatchCursor
 import com.mongodb.async.client.MongoIterable
 import com.mongodb.client.model.FindOptions
 import com.mongodb.operation.FindOperation
@@ -34,6 +35,7 @@ import org.reactivestreams.Subscriber
 import spock.lang.Specification
 
 import static com.mongodb.CustomMatchers.isTheSameAs
+import static com.mongodb.ReadPreference.primary
 import static com.mongodb.ReadPreference.secondary
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 import static spock.util.matcher.HamcrestSupport.expect
@@ -127,6 +129,48 @@ class FindFluentSpecification extends Specification {
                 .partial(true)
                 .slaveOk(true)
         )
+    }
+
+    def 'should build the expected findOperation for first'() {
+        given:
+        def cannedResults = [new Document('_id', 1)]
+        def cursor = {
+            Stub(AsyncBatchCursor) {
+                def count = 0
+                def results;
+                def getResult = {
+                    if (count < 1) {
+                        results = cannedResults
+                    } else {
+                        results = null
+                    }
+                    count++
+                    results
+                }
+                next(_) >> {
+                    it[0].onResult(getResult(), null)
+                }
+                isClosed() >> { count >= 1 }
+            }
+        }
+        def executor = new TestOperationExecutor([cursor()]);
+        def wrapped = new com.mongodb.async.client.FindFluentImpl<Document>(namespace, Document, codecRegistry, primary(), executor,
+                new Document(), new FindOptions())
+        def fluentFind = new FindFluentImpl<Document>(wrapped)
+
+        when: 'default input should be as expected'
+        fluentFind.first().subscribe(subscriber)
+
+        def operation = executor.getReadOperation() as FindOperation<Document>
+        def readPreference = executor.getReadPreference()
+
+        then:
+        expect operation, isTheSameAs(new FindOperation<Document>(namespace, new DocumentCodec())
+                .filter(new BsonDocument())
+                .batchSize(0)
+                .limit(-1)
+        )
+        readPreference == primary()
     }
 
     def 'should handle mixed types'() {

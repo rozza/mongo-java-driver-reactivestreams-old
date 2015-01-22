@@ -94,24 +94,15 @@ class MongoIterablePublisherSpecification extends Specification {
 
     def 'should call next on the batchCursor'() {
         given:
-        def cannedResults = [new Document('_id', 1), new Document('_id', 1), new Document('_id', 1)]
+        def batchedResults = [[new Document('_id', 1), new Document('_id', 2), new Document('_id', 3)],
+                              [new Document('_id', 4)] , [new Document('_id', 5)]]
+        def cannedResults = batchedResults.flatten()
         def cursor = {
             Stub(AsyncBatchCursor) {
-                def count = 0
-                def results;
-                def getResult = {
-                    if (count < 3) {
-                        results = [cannedResults[0]]
-                    } else {
-                        results = null
-                    }
-                    count++
-                    results
-                }
                 next(_) >> {
-                    it[0].onResult(getResult(), null)
+                    it[0].onResult(batchedResults.remove(0), null)
                 }
-                isClosed() >> { count >= 3 }
+                isClosed() >> { batchedResults.isEmpty() }
             }
         }
         def subscriber = new Fixture.ObservableSubscriber()
@@ -121,24 +112,24 @@ class MongoIterablePublisherSpecification extends Specification {
 
         when:
         new MongoIterablePublisher(mongoIterable).subscribe(subscriber)
-        subscriber.getSubscription().request(1)
+        subscriber.getSubscription().request(1)  // 1 requested in total
 
         then:
         !subscriber.isCompleted()
         subscriber.getReceived() == [cannedResults[0]]
 
         when:
-        subscriber.getSubscription().request(1)
+        subscriber.getSubscription().request(3) // 4 requested in total
 
         then:
+        subscriber.getReceived() == cannedResults[0..3]
         !subscriber.isCompleted()
-        subscriber.getReceived() == [cannedResults[0], cannedResults[1]]
 
         when:
-        subscriber.getSubscription().request(1)
+        subscriber.getSubscription().request(6) // 10 requested in total
 
         then:
-        subscriber.isCompleted()
         subscriber.getReceived() == cannedResults
+        subscriber.isCompleted()
     }
 }

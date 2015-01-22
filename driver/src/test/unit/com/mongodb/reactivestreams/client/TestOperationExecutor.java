@@ -72,16 +72,6 @@ public class TestOperationExecutor implements AsyncOperationExecutor {
         }
     }
 
-    public void proceedWithRead() {
-        readOperations.add(queuedReadOperations.remove(0));
-        callResult(queuedReadCallbacks.remove(0));
-    }
-
-    public void proceedWithWrite() {
-        writeOperations.add(queuedWriteOperations.remove(0));
-        callResult(queuedWriteCallbacks.remove(0));
-    }
-
     <T> void callResult(final SingleResultCallback<T> callback) {
         Object response = responses.remove(0);
         if (response instanceof Throwable) {
