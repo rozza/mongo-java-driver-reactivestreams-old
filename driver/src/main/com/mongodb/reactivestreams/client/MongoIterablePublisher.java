@@ -16,6 +16,7 @@
 
 package com.mongodb.reactivestreams.client;
 
+import com.mongodb.MongoException;
 import com.mongodb.async.AsyncBatchCursor;
 import com.mongodb.async.SingleResultCallback;
 import com.mongodb.async.client.MongoIterable;
@@ -85,7 +86,7 @@ class MongoIterablePublisher<T> implements Publisher<T> {
                         batchCursor.set(result);
                         getNextBatch();
                     } else {
-                        onComplete();
+                        onError(new MongoException("Unexpected error, no AsyncBatchCursor returned from the MongoIterable."));
                     }
                 }
             });

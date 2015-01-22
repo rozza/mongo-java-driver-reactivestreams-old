@@ -86,10 +86,10 @@ class MongoIterablePublisherSpecification extends Specification {
         subscriber.isCompleted()
 
         when:
-        def result = subscriber.get(1, TimeUnit.SECONDS)
+        subscriber.get(1, TimeUnit.SECONDS)
 
         then:
-        result == []
+        thrown(MongoException)
     }
 
     def 'should call next on the batchCursor'() {
