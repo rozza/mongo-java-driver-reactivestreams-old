@@ -66,7 +66,7 @@ class MongoIterablePublisher<T> implements Publisher<T> {
                             onError(t);
                         } else if (result != null) {
                             batchCursor.set(result);
-                            callBatchCursorNext();
+                            getNextBatch();
                         } else {
                             onError(new MongoException("Unexpected error, no AsyncBatchCursor returned from the MongoIterable."));
                         }
@@ -86,8 +86,8 @@ class MongoIterablePublisher<T> implements Publisher<T> {
             }
         }
 
-        void callBatchCursorNext() {
-            log("callBatchCursorNext");
+        void getNextBatch() {
+            log("getNextBatch");
             if (batchCursorNextLock.compareAndSet(false, true)) {
                 AsyncBatchCursor<T> cursor = batchCursor.get();
                 if (cursor.isClosed()) {
@@ -143,11 +143,13 @@ class MongoIterablePublisher<T> implements Publisher<T> {
                 }
 
                 if (!cursorCompleted.get() && wanted.get() > resultsQueue.size()) {
-                    callBatchCursorNext();
-                } else if (wanted.get() > 0 && resultsQueue.peek() != null) {
-                    processResultsQueue();
-                } else if (cursorCompleted.get()) {
-                    onComplete();
+                    getNextBatch();
+                } else if (resultsQueue.peek() != null) {
+                    if (wanted.get() > 0) {
+                        processResultsQueue();
+                    } else if (cursorCompleted.get()) {
+                        onComplete();
+                    }
                 }
             }
         }
