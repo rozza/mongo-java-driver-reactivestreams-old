@@ -17,6 +17,7 @@
 package com.mongodb.reactivestreams.client;
 
 import com.mongodb.CursorType;
+import org.bson.conversions.Bson;
 import org.reactivestreams.Publisher;
 
 import java.util.concurrent.TimeUnit;
@@ -42,7 +43,7 @@ public interface FindPublisher<T> extends Publisher<T> {
      * @return this
      * @mongodb.driver.manual reference/method/db.collection.find/ Filter
      */
-    FindPublisher<T> filter(Object filter);
+    FindPublisher<T> filter(Bson filter);
 
     /**
      * Sets the limit to apply.
@@ -78,7 +79,7 @@ public interface FindPublisher<T> extends Publisher<T> {
      * @return this
      * @mongodb.driver.manual reference/operator/query-modifier/ Query Modifiers
      */
-    FindPublisher<T> modifiers(Object modifiers);
+    FindPublisher<T> modifiers(Bson modifiers);
 
     /**
      * Sets a document describing the fields to return for all matching documents.
@@ -87,7 +88,7 @@ public interface FindPublisher<T> extends Publisher<T> {
      * @return this
      * @mongodb.driver.manual reference/method/db.collection.find/ Projection
      */
-    FindPublisher<T> projection(Object projection);
+    FindPublisher<T> projection(Bson projection);
     /**
      * Sets the sort criteria to apply to the query.
      *
@@ -95,7 +96,7 @@ public interface FindPublisher<T> extends Publisher<T> {
      * @return this
      * @mongodb.driver.manual reference/method/cursor.sort/ Sort
      */
-    FindPublisher<T> sort(Object sort);
+    FindPublisher<T> sort(Bson sort);
 
     /**
      * The server normally times out idle cursors after an inactivity period (10 minutes)

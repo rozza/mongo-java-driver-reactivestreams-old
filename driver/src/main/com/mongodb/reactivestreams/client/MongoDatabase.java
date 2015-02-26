@@ -26,9 +26,8 @@ import org.reactivestreams.Publisher;
 
 /**
  * The MongoDatabase interface.
- *
+ * <p/>
  * <p>Note: Additions to this interface will not be considered to break binary compatibility.</p>
- *
  */
 @ThreadSafe
 public interface MongoDatabase {
@@ -97,15 +96,15 @@ public interface MongoDatabase {
      *
      * @param collectionName the name of the collection to return
      * @param clazz          the default class to cast any documents returned from the database into.
-     * @param <T>            the type of the class to use instead of {@code Document}.
+     * @param <TDocument>    the type of the class to use instead of {@code Document}.
      * @return the collection
      */
-    <T> MongoCollection<T> getCollection(String collectionName, Class<T> clazz);
+    <TDocument> MongoCollection<TDocument> getCollection(String collectionName, Class<TDocument> clazz);
 
     /**
      * Executes command in the context of the current database.
      *
-     * @param command  the command to be run
+     * @param command the command to be run
      * @return a publisher containing the command result
      */
     Publisher<Document> executeCommand(Object command);
@@ -122,12 +121,12 @@ public interface MongoDatabase {
     /**
      * Executes command in the context of the current database.
      *
-     * @param command  the command to be run
-     * @param clazz    the default class to cast any documents returned from the database into.
-     * @param <T>      the type of the class to use instead of {@code Document}.
+     * @param command   the command to be run
+     * @param clazz     the default class to cast any documents returned from the database into.
+     * @param <TResult> the type of the class to use instead of {@code Document}.
      * @return a publisher containing the command result
      */
-    <T> Publisher<T> executeCommand(Object command, Class<T> clazz);
+    <TResult> Publisher<TResult> executeCommand(Object command, Class<TResult> clazz);
 
     /**
      * Executes command in the context of the current database.
@@ -135,10 +134,10 @@ public interface MongoDatabase {
      * @param command        the command to be run
      * @param readPreference the {@link com.mongodb.ReadPreference} to be used when executing the command
      * @param clazz          the default class to cast any documents returned from the database into.
-     * @param <T>            the type of the class to use instead of {@code Document}.
+     * @param <TResult>      the type of the class to use instead of {@code Document}.
      * @return a publisher containing the command result
      */
-    <T> Publisher<T> executeCommand(Object command, ReadPreference readPreference, Class<T> clazz);
+    <TResult> Publisher<TResult> executeCommand(Object command, ReadPreference readPreference, Class<TResult> clazz);
 
     /**
      * Drops this database.
@@ -166,12 +165,12 @@ public interface MongoDatabase {
     /**
      * Finds all the collections in this database.
      *
-     * @param clazz the class to decode each document into
-     * @param <C>   the target document type of the iterable.
+     * @param clazz     the class to decode each document into
+     * @param <TResult> the target document type of the iterable.
      * @return the fluent list collections interface
      * @mongodb.driver.manual reference/command/listCollections listCollections
      */
-    <C> ListCollectionsPublisher<C> listCollections(Class<C> clazz);
+    <TResult> ListCollectionsPublisher<TResult> listCollections(Class<TResult> clazz);
 
     /**
      * Create a new collection with the given name.

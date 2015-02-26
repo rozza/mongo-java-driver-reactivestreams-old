@@ -18,6 +18,7 @@ package com.mongodb.reactivestreams.client;
 
 import com.mongodb.CursorType;
 import com.mongodb.async.SingleResultCallback;
+import org.bson.conversions.Bson;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
@@ -44,7 +45,7 @@ class FindPublisherImpl<T> implements FindPublisher<T> {
     }
 
     @Override
-    public FindPublisher<T> filter(final Object filter) {
+    public FindPublisher<T> filter(final Bson filter) {
         wrapped.filter(filter);
         return this;
     }
@@ -68,19 +69,19 @@ class FindPublisherImpl<T> implements FindPublisher<T> {
     }
 
     @Override
-    public FindPublisher<T> modifiers(final Object modifiers) {
+    public FindPublisher<T> modifiers(final Bson modifiers) {
         wrapped.modifiers(modifiers);
         return this;
     }
 
     @Override
-    public FindPublisher<T> projection(final Object projection) {
+    public FindPublisher<T> projection(final Bson projection) {
         wrapped.projection(projection);
         return this;
     }
 
     @Override
-    public FindPublisher<T> sort(final Object sort) {
+    public FindPublisher<T> sort(final Bson sort) {
         wrapped.sort(sort);
         return this;
     }
