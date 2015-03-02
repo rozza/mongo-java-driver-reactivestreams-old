@@ -22,12 +22,14 @@ import com.mongodb.annotations.ThreadSafe;
 import com.mongodb.client.model.CreateCollectionOptions;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.conversions.Bson;
 import org.reactivestreams.Publisher;
 
 /**
  * The MongoDatabase interface.
- * <p/>
+ *
  * <p>Note: Additions to this interface will not be considered to break binary compatibility.</p>
+ * @since 1.0
  */
 @ThreadSafe
 public interface MongoDatabase {
@@ -107,7 +109,7 @@ public interface MongoDatabase {
      * @param command the command to be run
      * @return a publisher containing the command result
      */
-    Publisher<Document> executeCommand(Object command);
+    Publisher<Document> executeCommand(Bson command);
 
     /**
      * Executes command in the context of the current database.
@@ -116,7 +118,7 @@ public interface MongoDatabase {
      * @param readPreference the {@link com.mongodb.ReadPreference} to be used when executing the command
      * @return a publisher containing the command result
      */
-    Publisher<Document> executeCommand(Object command, ReadPreference readPreference);
+    Publisher<Document> executeCommand(Bson command, ReadPreference readPreference);
 
     /**
      * Executes command in the context of the current database.
@@ -126,7 +128,7 @@ public interface MongoDatabase {
      * @param <TResult> the type of the class to use instead of {@code Document}.
      * @return a publisher containing the command result
      */
-    <TResult> Publisher<TResult> executeCommand(Object command, Class<TResult> clazz);
+    <TResult> Publisher<TResult> executeCommand(Bson command, Class<TResult> clazz);
 
     /**
      * Executes command in the context of the current database.
@@ -137,7 +139,7 @@ public interface MongoDatabase {
      * @param <TResult>      the type of the class to use instead of {@code Document}.
      * @return a publisher containing the command result
      */
-    <TResult> Publisher<TResult> executeCommand(Object command, ReadPreference readPreference, Class<TResult> clazz);
+    <TResult> Publisher<TResult> executeCommand(Bson command, ReadPreference readPreference, Class<TResult> clazz);
 
     /**
      * Drops this database.

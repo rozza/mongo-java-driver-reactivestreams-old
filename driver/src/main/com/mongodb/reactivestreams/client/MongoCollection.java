@@ -46,6 +46,7 @@ import java.util.List;
  * <p>Note: Additions to this interface will not be considered to break binary compatibility.</p>
  *
  * @param <TDocument> The type that this collection will encode documents from and decode documents to.
+ * @since 1.0
  */
 @ThreadSafe
 public interface MongoCollection<TDocument> {
@@ -323,10 +324,8 @@ public interface MongoCollection<TDocument> {
     /**
      * Update a single document in the collection according to the specified arguments.
      *
-     * @param filter a document describing the query filter, which may not be null. This can be of any type for which a {@code Codec} is
-     *               registered
-     * @param update a document describing the update, which may not be null. The update to apply must include only update operators. This
-     *               can be of any type for which a {@code Codec} is registered
+     * @param filter a document describing the query filter, which may not be null.
+     * @param update a document describing the update, which may not be null. The update to apply must include only update operators.
      * @return a publisher with a single element the UpdateResult
      * @mongodb.driver.manual tutorial/modify-documents/ Updates
      * @mongodb.driver.manual reference/operator/update/ Update Operators
@@ -336,10 +335,8 @@ public interface MongoCollection<TDocument> {
     /**
      * Update a single document in the collection according to the specified arguments.
      *
-     * @param filter  a document describing the query filter, which may not be null. This can be of any type for which a {@code Codec} is
-     *                registered
-     * @param update  a document describing the update, which may not be null. The update to apply must include only update operators. This
-     *                can be of any type for which a {@code Codec} is registered
+     * @param filter  a document describing the query filter, which may not be null.
+     * @param update  a document describing the update, which may not be null. The update to apply must include only update operators.
      * @param options the options to apply to the update operation
      * @return a publisher with a single element the UpdateResult
      * @mongodb.driver.manual tutorial/modify-documents/ Updates
@@ -350,10 +347,8 @@ public interface MongoCollection<TDocument> {
     /**
      * Update a single document in the collection according to the specified arguments.
      *
-     * @param filter a document describing the query filter, which may not be null. This can be of any type for which a {@code Codec} is
-     *               registered
-     * @param update a document describing the update, which may not be null. The update to apply must include only update operators. This
-     *               can be of any type for which a {@code Codec} is registered
+     * @param filter a document describing the query filter, which may not be null.
+     * @param update a document describing the update, which may not be null. The update to apply must include only update operators.
      * @return a publisher with a single element the UpdateResult
      * @mongodb.driver.manual tutorial/modify-documents/ Updates
      * @mongodb.driver.manual reference/operator/update/ Update Operators
@@ -363,10 +358,8 @@ public interface MongoCollection<TDocument> {
     /**
      * Update a single document in the collection according to the specified arguments.
      *
-     * @param filter  a document describing the query filter, which may not be null. This can be of any type for which a {@code Codec} is
-     *                registered
-     * @param update  a document describing the update, which may not be null. The update to apply must include only update operators. This
-     *                can be of any type for which a {@code Codec} is registered
+     * @param filter  a document describing the query filter, which may not be null.
+     * @param update  a document describing the update, which may not be null. The update to apply must include only update operators.
      * @param options the options to apply to the update operation
      * @return a publisher with a single element the UpdateResult
      * @mongodb.driver.manual tutorial/modify-documents/ Updates
@@ -419,10 +412,8 @@ public interface MongoCollection<TDocument> {
     /**
      * Atomically find a document and update it.
      *
-     * @param filter a document describing the query filter, which may not be null. This can be of any type for which a {@code Codec} is
-     *               registered
-     * @param update a document describing the update, which may not be null. The update to apply must include only update operators. This
-     *               can be of any type for which a {@code Codec} is registered
+     * @param filter a document describing the query filter, which may not be null.
+     * @param update a document describing the update, which may not be null. The update to apply must include only update operators.
      * @return a publisher with a single element the document that was updated before the update was applied.  If no documents matched the
      * query filter, then null will be returned
      */
@@ -431,10 +422,8 @@ public interface MongoCollection<TDocument> {
     /**
      * Atomically find a document and update it.
      *
-     * @param filter  a document describing the query filter, which may not be null. This can be of any type for which a {@code Codec} is
-     *                registered
-     * @param update  a document describing the update, which may not be null. The update to apply must include only update operators. This
-     *                can be of any type for which a {@code Codec} is registered
+     * @param filter  a document describing the query filter, which may not be null.
+     * @param update  a document describing the update, which may not be null. The update to apply must include only update operators.
      * @param options the options to apply to the operation
      * @return a publisher with a single element the document that was updated.  Depending on the value of the {@code returnOriginal}
      * property, this will either be the document as it was before the update or as it is after the update.  If no documents matched the
@@ -453,8 +442,7 @@ public interface MongoCollection<TDocument> {
     /**
      * Creates an index.
      *
-     * @param key an object describing the index key(s), which may not be null. This can be of any type for which a {@code Codec} is
-     *            registered
+     * @param key an object describing the index key(s), which may not be null.
      * @return a publisher with a single element indicating when the operation has completed
      * @mongodb.driver.manual reference/method/db.collection.ensureIndex Ensure Index
      */
@@ -463,8 +451,7 @@ public interface MongoCollection<TDocument> {
     /**
      * Creates an index.
      *
-     * @param key     an object describing the index key(s), which may not be null. This can be of any type for which a {@code Codec} is
-     *                registered
+     * @param key     an object describing the index key(s), which may not be null.
      * @param options the options for the index
      * @return a publisher with a single element indicating when the operation has completed
      * @mongodb.driver.manual reference/method/db.collection.ensureIndex Ensure Index
