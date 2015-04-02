@@ -1,0 +1,110 @@
++++
+date = "2015-03-17T15:36:56Z"
+title = "Quick Tour Primer"
+[menu.main]
+  parent = "Getting Started"
+  identifier = "Primer"
+  weight = 20
+  pre = "<i class='fa'></i>"
++++
+
+# Quick Tour Primer
+
+The following code snippets come from the `SubscriberHelpers.java` example code
+that can be found with the [examples source]({{< srcref "tour/examples/tour/src/SubscriberHelpers.java">}}).
+
+{{% note %}}
+See the [installation guide]({{< relref "getting-started/installation-guide.md" >}})
+for instructions on how to install the MongoDB Reactive Streams Java Driver.
+{{% /note %}}
+
+## Reactive Streams
+
+This library is an implementation of the [reactive streams](http://www.reactive-streams.org) specification and the reactive stream API 
+consists of the following components:
+
+1. Publisher
+2. Subscriber
+3. Subscription
+
+A `Publisher` is a provider of a potentially unbounded number of sequenced elements, publishing them according to the demand received from its `Subscriber(s)`.
+
+In response to a call to `Publisher.subscribe(Subscriber)` the possible invocation sequences for methods on the `Subscriber` are given by the following protocol:
+
+```
+onSubscribe onNext* (onError | onComplete)?
+```
+
+This means that `onSubscribe` is always signalled, followed by a possibly unbounded number of `onNext` signals (as requested by `Subscriber`) 
+followed by an `onError` signal if there is a failure, or an `onComplete` signal when no more elements are available—all as long as 
+the `Subscription` is not cancelled.
+
+For more information about reactive streams go to: [http://www.reactive-streams.org](http://www.reactive-streams.org).
+
+
+## From Async Callbacks to Subscribers
+
+The MongoDB Reactive Streams Java Driver is built upon the MongoDB Async driver which is callback driven.
+The API mirrors the Async driver API and any methods that cause network IO return a `Publisher<T>`, 
+where `T` is the type of response for the document.  The exception to that rule is where the async driver can return a `null`
+value in a callback, but in [reactive streams](http://www.reactive-streams.org) this is forbidden, so in these circumstances we
+return a [`Success`]({{< apiref "com/mongodb/reactivestreams/client/Success.html">}}) on the operation.
+
+{{% note %}}
+All [`Publishers`](http://www.reactive-streams.org/reactive-streams-1.0.0.RC4-javadoc/?org/reactivestreams/Publisher.html) returned 
+from the API are cold, meaning that nothing happens until they are subscribed to and the subscription makes a request. So just creating a 
+`Publisher` won't cause any network IO, its not util `Subscription.request()` is called that MongoDB is passed the operation.
+
+Publishers in this implementation are unicast. Each [`Subscription`](http://www.reactive-streams.org/reactive-streams-1.0.0.RC4-javadoc/?org/reactivestreams/Subscription.html) 
+to a `Publisher` relates to a single MongoDB operation and its ['Subscriber'](http://www.reactive-streams.org/reactive-streams-1.0.0.RC4-javadoc/?org/reactivestreams/Subscriber.html)  
+will receive its own specific set of results. 
+{{% /note %}}
+
+
+## Subscribers used in the Quick Tour
+
+For the Quick Tour we have implemented a couple of different Subscribers and although this is an artificial scenario for reactive streams we
+do block on the results of one example before starting the next, so to ensure the state of the database.
+
+1. ObservableSubscriber
+
+    The base subscriber used is the [`ObservableSubscriber<T>`]({{< srcref "tour/examples/tour/src/SubscriberHelpers.java">}}) is a Subscriber 
+    that stores the results of the `Publisher<T>`. It also contains an `await()` method so we can block for results to ensure the state of 
+    the database before going onto the next example.
+
+2. OperationSubscriber
+
+    An implementation of the `ObservableSubscriber` that immediately calls `Subscription.request` when its subscribed to.
+
+3.  PrintSubscriber
+
+    An implementation of the `OperationSubscriber` that prints a message `Subscriber.onComplete`.
+
+3.  PrintDocumentSubscriber
+
+    An implementation of the `OperationSubscriber` that prints the json version of a `Document` when `Subscriber.onNext(Document document)` is called.
+
+
+##  Blocking and non blocking examples
+
+As our subscribers contain a latch that is only released when the `onComplete` method of the `Subscriber` is called, we can use that latch 
+to block on by calling the `await` method.  Below are two examples using our auto requesting `PrintDocumentSubscriber` the first is non blocking
+and the second blocks awaiting for the `Publisher` to complete:
+
+```java
+// Create a publisher
+Publisher<Document> publisher = collection.find();
+
+// Non blocking
+publisher.subscribe(new PrintDocumentSubscriber());
+
+Subscriber<Document> subscriber = new PrintDocumentSubscriber();
+publisher.subscribe(subscriber);
+subscriber.await(); // Block for the publisher to complete
+```
+
+## Publishers, Subscribers and Subscriptions
+
+In general `Publishers`, `Subscribers` and `Subscriptions` are a low level API and its expected that users and libraries will build more 
+expressive API's upon them rather than solely use these interfaces.  As a library solely implementing these interfaces, users will benefit
+from this growing ecosystem, which is a core design principle of reactive streams.

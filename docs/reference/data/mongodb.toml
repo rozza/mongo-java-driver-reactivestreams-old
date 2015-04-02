@@ -1,0 +1,6 @@
+githubUser = "rozza"
+githubRepo = "mongo-java-driver-reactivestreams"
+githubBranch = "master"
+currentVersion = "1.0"
+highlightTheme = "idea.css"
+apiUrl = "/javadoc"
