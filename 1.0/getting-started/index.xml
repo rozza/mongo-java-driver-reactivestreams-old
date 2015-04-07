@@ -25,7 +25,7 @@ use the Reactive Streams Java driver to execute basic CRUD operations.  In this 
 administrative features available in the driver.&lt;/p&gt;
 
 &lt;p&gt;The following code snippets come from the &lt;code&gt;QuickTourAdmin.java&lt;/code&gt; example code
-that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourQuickTourAdmin.java
+that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/QuickTourAdmin.java
 &#34;&gt;driver
 source&lt;/a&gt;.&lt;/p&gt;
 
@@ -275,7 +275,7 @@ method.  Here we call the &lt;a href=&#34;{{ docsref &amp;quot;reference/command
 &lt;h1 id=&#34;quick-tour&#34;&gt;Quick Tour&lt;/h1&gt;
 
 &lt;p&gt;The following code snippets come from the &lt;code&gt;QuickTour.java&lt;/code&gt; example code
-that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourQuickTour.java
+that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/QuickTour.java
 &#34;&gt;driver
 source&lt;/a&gt;.&lt;/p&gt;
 
@@ -714,7 +714,7 @@ executed one at a time.&lt;/p&gt;
 &lt;h1 id=&#34;quick-tour-primer&#34;&gt;Quick Tour Primer&lt;/h1&gt;
 
 &lt;p&gt;The following code snippets come from the &lt;code&gt;SubscriberHelpers.java&lt;/code&gt; example code
-that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourSubscriberHelpers.java
+that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/SubscriberHelpers.java
 &#34;&gt;examples source&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;div class=&#34;admonition note&#34;&gt;
@@ -780,7 +780,7 @@ do block on the results of one example before starting the next, so as to ensure
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;ObservableSubscriber&lt;/p&gt;
 
-&lt;p&gt;The base subscriber class is the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourSubscriberHelpers.java
+&lt;p&gt;The base subscriber class is the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/SubscriberHelpers.java
 &#34;&gt;&lt;code&gt;ObservableSubscriber&amp;lt;T&amp;gt;&lt;/code&gt;&lt;/a&gt;, a Subscriber
 that stores the results of the &lt;code&gt;Publisher&amp;lt;T&amp;gt;&lt;/code&gt;. It also contains an &lt;code&gt;await()&lt;/code&gt; method so we can block for results to ensure the state of
 the database before going on to the next example.&lt;/p&gt;&lt;/li&gt;

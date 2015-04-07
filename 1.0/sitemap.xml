@@ -18,11 +18,6 @@
   </url>
   
   <url>
-    <loc>/mongo-java-driver-reactivestreams/1.0/getting-started/installation-guide/</loc>
-    <lastmod>2015-03-17T15:36:56+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/mongo-java-driver-reactivestreams/1.0/getting-started/</loc>
     <lastmod>2015-03-17T15:36:56+00:00</lastmod>
   </url>
@@ -38,12 +33,17 @@
   </url>
   
   <url>
-    <loc>/mongo-java-driver-reactivestreams/1.0/getting-started/quick-tour/</loc>
+    <loc>/mongo-java-driver-reactivestreams/1.0/</loc>
     <lastmod>2015-03-17T15:36:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/mongo-java-driver-reactivestreams/1.0/</loc>
+    <loc>/mongo-java-driver-reactivestreams/1.0/getting-started/installation-guide/</loc>
+    <lastmod>2015-03-17T15:36:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/mongo-java-driver-reactivestreams/1.0/getting-started/quick-tour/</loc>
     <lastmod>2015-03-17T15:36:56+00:00</lastmod>
   </url>
   

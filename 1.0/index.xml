@@ -78,58 +78,6 @@ for detailed reference information see the &lt;a href=&#34;http://mongodb.github
     </item>
     
     <item>
-      <title>Installation Guide</title>
-      <link>/mongo-java-driver-reactivestreams/1.0/getting-started/installation-guide/</link>
-      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
-      
-      <guid>/mongo-java-driver-reactivestreams/1.0/getting-started/installation-guide/</guid>
-      <description>
-
-&lt;h1 id=&#34;installation&#34;&gt;Installation&lt;/h1&gt;
-
-&lt;p&gt;The recommended way to get started using one of the drivers in your project is with a dependency management system.&lt;/p&gt;
-
-&lt;p&gt;&lt;div class=&#34;pull-right&#34;&gt;
-  &lt;input type=&#34;checkbox&#34; checked=&#34;&#34; class=&#34;distroPicker&#34; data-toggle=&#34;toggle&#34; data-on=&#34;Maven&#34; data-off=&#34;Gradle&#34; data-offstyle=&#34;success&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;h2 id=&#34;mongodb-reactive-streams-driver&#34;&gt;MongoDB Reactive Streams Driver&lt;/h2&gt;
-
-&lt;p&gt;The Reactive Streams implementation for asynchronous stream processing with non-blocking back pressure.&lt;/p&gt;
-
-&lt;p&gt;
-&lt;section class=&#34;maven&#34;&gt;
-&lt;pre&gt;&lt;code class=&#34;ini&#34;&gt;
-&amp;lt;dependencies&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;org.mongodb&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;mongodb-driver-reactivestreams&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;1.0.0&amp;lt;/version&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-&amp;lt;/dependencies&amp;gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/section&gt;
-&lt;section class=&#34;gradle hidden&#34;&gt;
-&lt;pre&gt;&lt;code&gt;
-  dependencies {
-      compile &#39;org.mongodb:mongodb-driver-reactivestreams:1.0.0&#39;
-  }
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/section&gt;
-&lt;section class=&#34;downloadInfo&#34;&gt;
-&lt;p class=&#34;small&#34;&gt;You can also download the jars
-  &lt;a href=&#34;https://oss.sonatype.org/content/repositories/releases/org/mongodb/mongodb-driver-reactivestreams/1.0.0&#34; target=&#34;_blank&#34;&gt;directly&lt;/a&gt;
-  from sonatype.&lt;/a&gt;
-&lt;/p&gt;
-&lt;/section&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Getting Started</title>
       <link>/mongo-java-driver-reactivestreams/1.0/getting-started/</link>
       <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
@@ -165,7 +113,7 @@ use the Reactive Streams Java driver to execute basic CRUD operations.  In this 
 administrative features available in the driver.&lt;/p&gt;
 
 &lt;p&gt;The following code snippets come from the &lt;code&gt;QuickTourAdmin.java&lt;/code&gt; example code
-that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourQuickTourAdmin.java
+that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/QuickTourAdmin.java
 &#34;&gt;driver
 source&lt;/a&gt;.&lt;/p&gt;
 
@@ -343,7 +291,7 @@ method.  Here we call the &lt;a href=&#34;{{ docsref &amp;quot;reference/command
 &lt;h1 id=&#34;quick-tour-primer&#34;&gt;Quick Tour Primer&lt;/h1&gt;
 
 &lt;p&gt;The following code snippets come from the &lt;code&gt;SubscriberHelpers.java&lt;/code&gt; example code
-that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourSubscriberHelpers.java
+that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/SubscriberHelpers.java
 &#34;&gt;examples source&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;div class=&#34;admonition note&#34;&gt;
@@ -409,7 +357,7 @@ do block on the results of one example before starting the next, so as to ensure
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;ObservableSubscriber&lt;/p&gt;
 
-&lt;p&gt;The base subscriber class is the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourSubscriberHelpers.java
+&lt;p&gt;The base subscriber class is the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/SubscriberHelpers.java
 &#34;&gt;&lt;code&gt;ObservableSubscriber&amp;lt;T&amp;gt;&lt;/code&gt;&lt;/a&gt;, a Subscriber
 that stores the results of the &lt;code&gt;Publisher&amp;lt;T&amp;gt;&lt;/code&gt;. It also contains an &lt;code&gt;await()&lt;/code&gt; method so we can block for results to ensure the state of
 the database before going on to the next example.&lt;/p&gt;&lt;/li&gt;
@@ -453,6 +401,81 @@ from this growing ecosystem, which is a core design principle of reactive stream
     </item>
     
     <item>
+      <title>Reactive Streams Driver</title>
+      <link>/mongo-java-driver-reactivestreams/1.0/</link>
+      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
+      
+      <guid>/mongo-java-driver-reactivestreams/1.0/</guid>
+      <description>
+
+&lt;h2 id=&#34;mongodb-reactive-streams-java-driver-documentation&#34;&gt;MongoDB Reactive Streams Java Driver Documentation&lt;/h2&gt;
+
+&lt;p&gt;Welcome to the MongoDB Reactive Streams Java driver documentation hub.&lt;/p&gt;
+
+&lt;p&gt;The Reactive Streams implementation is built upon the
+&lt;a href=&#34;http://mongodb.github.io/mongo-java-driver/3.0/driver-async&#34;&gt;&lt;code&gt;MongoDB Async Driver&lt;/code&gt;&lt;/a&gt; and we mirror their API.
+For reference documentation please see the async driver documentation.&lt;/p&gt;
+
+&lt;h3 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver-reactivestreams/1.0/mongo-java-driver-reactivestreams/1.0/getting-started/&#34;&gt;Getting Started&lt;/a&gt; guide contains installation instructions
+and a simple tutorial to get up  and running quickly.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Installation Guide</title>
+      <link>/mongo-java-driver-reactivestreams/1.0/getting-started/installation-guide/</link>
+      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
+      
+      <guid>/mongo-java-driver-reactivestreams/1.0/getting-started/installation-guide/</guid>
+      <description>
+
+&lt;h1 id=&#34;installation&#34;&gt;Installation&lt;/h1&gt;
+
+&lt;p&gt;The recommended way to get started using one of the drivers in your project is with a dependency management system.&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;pull-right&#34;&gt;
+  &lt;input type=&#34;checkbox&#34; checked=&#34;&#34; class=&#34;distroPicker&#34; data-toggle=&#34;toggle&#34; data-on=&#34;Maven&#34; data-off=&#34;Gradle&#34; data-offstyle=&#34;success&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;mongodb-reactive-streams-driver&#34;&gt;MongoDB Reactive Streams Driver&lt;/h2&gt;
+
+&lt;p&gt;The Reactive Streams implementation for asynchronous stream processing with non-blocking back pressure.&lt;/p&gt;
+
+&lt;p&gt;
+&lt;section class=&#34;maven&#34;&gt;
+&lt;pre&gt;&lt;code class=&#34;ini&#34;&gt;
+&amp;lt;dependencies&amp;gt;
+    &amp;lt;dependency&amp;gt;
+        &amp;lt;groupId&amp;gt;org.mongodb&amp;lt;/groupId&amp;gt;
+        &amp;lt;artifactId&amp;gt;mongodb-driver-reactivestreams&amp;lt;/artifactId&amp;gt;
+        &amp;lt;version&amp;gt;1.0.0&amp;lt;/version&amp;gt;
+    &amp;lt;/dependency&amp;gt;
+&amp;lt;/dependencies&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;section class=&#34;gradle hidden&#34;&gt;
+&lt;pre&gt;&lt;code&gt;
+  dependencies {
+      compile &#39;org.mongodb:mongodb-driver-reactivestreams:1.0.0&#39;
+  }
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/section&gt;
+&lt;section class=&#34;downloadInfo&#34;&gt;
+&lt;p class=&#34;small&#34;&gt;You can also download the jars
+  &lt;a href=&#34;https://oss.sonatype.org/content/repositories/releases/org/mongodb/mongodb-driver-reactivestreams/1.0.0&#34; target=&#34;_blank&#34;&gt;directly&lt;/a&gt;
+  from sonatype.&lt;/a&gt;
+&lt;/p&gt;
+&lt;/section&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Quick Tour</title>
       <link>/mongo-java-driver-reactivestreams/1.0/getting-started/quick-tour/</link>
       <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
@@ -463,7 +486,7 @@ from this growing ecosystem, which is a core design principle of reactive stream
 &lt;h1 id=&#34;quick-tour&#34;&gt;Quick Tour&lt;/h1&gt;
 
 &lt;p&gt;The following code snippets come from the &lt;code&gt;QuickTour.java&lt;/code&gt; example code
-that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tourQuickTour.java
+that can be found with the &lt;a href=&#34;https://github.com/rozza/mongo-java-driver-reactivestreams/blob/master/examples/tour/src/main/tour/QuickTour.java
 &#34;&gt;driver
 source&lt;/a&gt;.&lt;/p&gt;
 
@@ -888,29 +911,6 @@ executed one at a time.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Reactive Streams Driver</title>
-      <link>/mongo-java-driver-reactivestreams/1.0/</link>
-      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
-      
-      <guid>/mongo-java-driver-reactivestreams/1.0/</guid>
-      <description>
-
-&lt;h2 id=&#34;mongodb-reactive-streams-java-driver-documentation&#34;&gt;MongoDB Reactive Streams Java Driver Documentation&lt;/h2&gt;
-
-&lt;p&gt;Welcome to the MongoDB Reactive Streams Java driver documentation hub.&lt;/p&gt;
-
-&lt;p&gt;The Reactive Streams implementation is built upon the
-&lt;a href=&#34;http://mongodb.github.io/mongo-java-driver/3.0/driver-async&#34;&gt;&lt;code&gt;MongoDB Async Driver&lt;/code&gt;&lt;/a&gt; and we mirror their API.
-For reference documentation please see the async driver documentation.&lt;/p&gt;
-
-&lt;h3 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h3&gt;
-
-&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver-reactivestreams/1.0/mongo-java-driver-reactivestreams/1.0/getting-started/&#34;&gt;Getting Started&lt;/a&gt; guide contains installation instructions
-and a simple tutorial to get up  and running quickly.&lt;/p&gt;
 </description>
     </item>
     
